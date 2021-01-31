@@ -20,10 +20,14 @@ class Button:
         self.height = height
         self.screen = sc
         
-    def draw(self):
+    def draw(self): # Рисование кнопки
         pg.draw.rect(self.screen, self.color, \
                      (self.x, self.y, self.width, self.height), \
                      0, border_radius=4)
+    
+    def isEntry(self, m_x, m_y): # Попала ли мышка в кнопку
+        return self.x <= m_x <= self.x + self.width and \
+               self.y <= m_y <= self.y + self.height
 
 WHITE = (255, 255, 255)
 RED = (0, 200, 200)
@@ -38,6 +42,13 @@ while running:
     for event in list_events:
         if event.type == pg.QUIT:
             running = False
+    
+    # Обрабатываем движение мышки  
+    mouse_x, mouse_y = pg.mouse.get_pos()
+    if btn_yes.isEntry(mouse_x, mouse_y):
+        print("In BTN")
+    else:
+        print("Not in BTN")
     
     btn_yes.draw()
     pg.display.update()
